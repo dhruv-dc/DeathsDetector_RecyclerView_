@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Deaths Detector</string>
+    <string name="previous_button">Previous</string>
+    <string name="next_button">Next</string>
+    <string name="change_state">Change State</string>
+    <string name="counter_questions">0 out of 100</string>
+</resources>
