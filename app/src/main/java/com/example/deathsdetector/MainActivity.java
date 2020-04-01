@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onStart() {
         super.onStart();
+        totalCasesTextview = (TextView)findViewById(R.id.total_cases);
         mQueue = Volley.newRequestQueue(MainActivity.this);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, (JSONObject)null,
                 new Response.Listener<JSONObject>() {
@@ -90,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         nextButton = findViewById(R.id.next_button);
 
         dischargedTextview = findViewById(R.id.discharged_text_view);
-        totalCasesTextview = (TextView)findViewById(R.id.total_cases);
+
         deathsInStateTextview = findViewById(R.id.deaths_sw_text_view);
         positiveCasesTextview = findViewById(R.id.pc_text_view);
         stateCounterTextview = findViewById(R.id.counter_text);
@@ -99,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
         nextButton.setOnClickListener(this);
-            prevButton.setOnClickListener(this);
+        prevButton.setOnClickListener(this);
 
             questionList = new QuestionBank().getQuestion(new AnswerAsyncResponse() {
             @Override
@@ -119,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
         //Log.d("Main", "onCreate: "+questionList);
     }
-
+    int index=0;
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -127,7 +128,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 break;
             case R.id.next_button:
+                index = currentStateIndex;
+                index = (index + 1)%questionList.size();
+                updateState();
                 break;
         }
+    }
+
+    private void updateState() {
+        Log.d("stateupdae? ", "updateState: "+questionList.get(index));
+        String state = questionList.get(index).getStateNames();
+        int discharged = questionList.get(index).getDischarged();
+        int positivacases = questionList.get(index).getPositiveCasesInState();
+        int deathinstate = questionList.get(index).getDeathsInState();
+        stateTextview.setText(state);
+        deathsInStateTextview.setText(deathinstate);
+        dischargedTextview.setText(discharged);
+        positiveCasesTextview.setText(positivacases);
     }
 }
