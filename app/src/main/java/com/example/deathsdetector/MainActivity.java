@@ -15,6 +15,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.deathsdetector.controller.AppController;
 import com.example.deathsdetector.data.AnswerAsyncResponse;
 import com.example.deathsdetector.data.QuestionBank;
 import com.example.deathsdetector.model.Question;
@@ -29,43 +30,88 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     public TextView stateTextview;
+    public TextView totalCasesTextview;
     public TextView positiveCasesTextview;
     public TextView deathsInStateTextview;
     public TextView dischargedTextview;
     public TextView stateCounterTextview;
     public ImageButton nextButton;
+    private RequestQueue mQueue;
+    public int totalCases;
     public ImageButton prevButton;
     private int currentStateIndex = 0;
     private int currentPositiveCasesIndex=0;
     private int currentDischargedIndex=0;
     private int currentDeathInStateIndex=0;
+    private int currentTotalCases=0;
     public List<Question> questionList;
-    //public String url = "https://api.rootnet.in/covid19-in/stats/latest";
+    public String sukaru;
+    public String url = "https://api.rootnet.in/covid19-in/stats/latest";
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mQueue = Volley.newRequestQueue(MainActivity.this);
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, (JSONObject)null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            JSONObject jsonObject = response.getJSONObject("data");
+                            JSONObject jsonObject1 = jsonObject.getJSONObject("summary");
+                            Log.d("Maintotalcases ", "onResponse: "+jsonObject1.getString("total"));
+                            String sukaru = jsonObject1.getString("total");
+                            totalCasesTextview.setText("Total Cases : "+sukaru);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Log.d("error ", "onErrorResponse: "+error);
+                error.printStackTrace();
+            }
+        });
+        AppController.getInstance().addToRequestQueue(request);
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        totalCasesTextview = findViewById(R.id.total_cases);
+
         prevButton = findViewById(R.id.previous_button);
         nextButton = findViewById(R.id.next_button);
 
         dischargedTextview = findViewById(R.id.discharged_text_view);
+        totalCasesTextview = (TextView)findViewById(R.id.total_cases);
         deathsInStateTextview = findViewById(R.id.deaths_sw_text_view);
         positiveCasesTextview = findViewById(R.id.pc_text_view);
         stateCounterTextview = findViewById(R.id.counter_text);
         stateTextview = findViewById(R.id.state_text_view);
 
+
+
         nextButton.setOnClickListener(this);
-        prevButton.setOnClickListener(this);
+            prevButton.setOnClickListener(this);
 
             questionList = new QuestionBank().getQuestion(new AnswerAsyncResponse() {
             @Override
             public void processFinished(ArrayList<Question> questionArrayList) {
 
-//                stateTextview.setText(questionArrayList.get(currentStateIndex).getStateNames());
-//                dischargedTextview.setText(questionArrayList.get(currentDischargedIndex).getDischarged());
-//                deathsInStateTextview.setText(questionArrayList.get(currentDeathInStateIndex).getDeathsInState());
-//                positiveCasesTextview.setText(questionArrayList.get(currentPositiveCasesIndex).getPositiveCasesInState());
+
+
+                //totalCasesTextview.setText("Total Cases : "+Integer.toString());
+                stateTextview.setText(questionArrayList.get(currentStateIndex).getStateNames());
+                dischargedTextview.setText("Discharged : "+Integer.toString(questionArrayList.get(currentDischargedIndex).getDischarged()));
+                deathsInStateTextview.setText("Deaths : "+Integer.toString(questionArrayList.get(currentDeathInStateIndex).getDeathsInState()));
+                positiveCasesTextview.setText("Positive Cases : " +Integer.toString(questionArrayList.get(currentPositiveCasesIndex).getPositiveCasesInState()));
 
                 Log.d("statename ; ", "processFinished: "+questionArrayList.get(currentStateIndex).getStateNames());
                 Log.d("positivecases ", "processFinished: "+questionArrayList.get(currentPositiveCasesIndex).getPositiveCasesInState());
@@ -78,6 +124,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.previous_button:
+
+                break;
             case R.id.next_button:
                 break;
         }

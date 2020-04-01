@@ -9,5 +9,6 @@
     <string name="deaths_detector">Deaths Detector</string>
     <string name="counter_text">0 out of 100</string>
     <string name="state_text_view">hello this is going to be changed</string>
+    <string name="total_cases">Total Cases</string>
 
 </resources>
