@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 dischargedTextview.setText("Recovered : "+String.valueOf(questionArrayList.get(currentDischargedIndex).getDischarged()));
                 deathsInStateTextview.setText("Deaths : "+String.valueOf(questionArrayList.get(currentDeathInStateIndex).getDeathsInState()));
                 positiveCasesTextview.setText("Positive Cases : " +String.valueOf(questionArrayList.get(currentPositiveCasesIndex).getPositiveCasesInState()));
-                stateCounterTextview.setText(currentStateIndex + " / " + questionArrayList.size());
+                stateCounterTextview.setText(currentStateIndex+1 + " / " + questionArrayList.size());
 
                 Log.d("statename ; ", "processFinished: "+questionArrayList.get(currentStateIndex).getStateNames());
                 Log.d("positivecases ", "processFinished: "+questionArrayList.get(currentPositiveCasesIndex).getPositiveCasesInState());
@@ -155,6 +155,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         deathsInStateTextview.setText("Deaths : "+String.valueOf(deathinstate));
         dischargedTextview.setText("Recovered : "+String.valueOf(discharged));
         positiveCasesTextview.setText("Positive Cases : " +String.valueOf(positivacases));
-        stateCounterTextview.setText(currentStateIndex + " / " + questionList.size());
+        stateCounterTextview.setText(currentStateIndex+1 + " / " + questionList.size());
     }
 }
