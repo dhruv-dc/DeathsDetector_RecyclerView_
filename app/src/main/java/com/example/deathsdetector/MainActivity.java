@@ -113,6 +113,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 dischargedTextview.setText("Discharged : "+String.valueOf(questionArrayList.get(currentDischargedIndex).getDischarged()));
                 deathsInStateTextview.setText("Deaths : "+String.valueOf(questionArrayList.get(currentDeathInStateIndex).getDeathsInState()));
                 positiveCasesTextview.setText("Positive Cases : " +String.valueOf(questionArrayList.get(currentPositiveCasesIndex).getPositiveCasesInState()));
+                stateCounterTextview.setText(currentStateIndex + " / " + questionArrayList.size());
 
                 Log.d("statename ; ", "processFinished: "+questionArrayList.get(currentStateIndex).getStateNames());
                 Log.d("positivecases ", "processFinished: "+questionArrayList.get(currentPositiveCasesIndex).getPositiveCasesInState());
@@ -144,6 +145,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void updateState() {
+
         Log.d("stateupdae? ", "updateState: "+questionList.get(currentStateIndex));
         String state = questionList.get(currentStateIndex).getStateNames();
         int discharged = questionList.get(currentDischargedIndex).getDischarged();
@@ -153,5 +155,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         deathsInStateTextview.setText("Deaths : "+String.valueOf(deathinstate));
         dischargedTextview.setText("Discharged : "+String.valueOf(discharged));
         positiveCasesTextview.setText("Positive Cases : " +String.valueOf(positivacases));
+        stateCounterTextview.setText(currentStateIndex + " / " + questionList.size());
     }
 }
