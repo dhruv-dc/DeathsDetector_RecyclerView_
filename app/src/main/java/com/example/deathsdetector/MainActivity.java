@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 //totalCasesTextview.setText("Total Cases : "+Integer.toString());
                 stateTextview.setText(questionArrayList.get(currentStateIndex).getStateNames());
-                dischargedTextview.setText("Discharged : "+String.valueOf(questionArrayList.get(currentDischargedIndex).getDischarged()));
+                dischargedTextview.setText("Recovered : "+String.valueOf(questionArrayList.get(currentDischargedIndex).getDischarged()));
                 deathsInStateTextview.setText("Deaths : "+String.valueOf(questionArrayList.get(currentDeathInStateIndex).getDeathsInState()));
                 positiveCasesTextview.setText("Positive Cases : " +String.valueOf(questionArrayList.get(currentPositiveCasesIndex).getPositiveCasesInState()));
                 stateCounterTextview.setText(currentStateIndex + " / " + questionArrayList.size());
@@ -153,7 +153,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int deathinstate = questionList.get(currentDeathInStateIndex).getDeathsInState();
         stateTextview.setText(String.valueOf(state));
         deathsInStateTextview.setText("Deaths : "+String.valueOf(deathinstate));
-        dischargedTextview.setText("Discharged : "+String.valueOf(discharged));
+        dischargedTextview.setText("Recovered : "+String.valueOf(discharged));
         positiveCasesTextview.setText("Positive Cases : " +String.valueOf(positivacases));
         stateCounterTextview.setText(currentStateIndex + " / " + questionList.size());
     }
