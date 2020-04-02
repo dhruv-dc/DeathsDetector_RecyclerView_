@@ -110,40 +110,48 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 //totalCasesTextview.setText("Total Cases : "+Integer.toString());
                 stateTextview.setText(questionArrayList.get(currentStateIndex).getStateNames());
-                dischargedTextview.setText("Discharged : "+Integer.toString(questionArrayList.get(currentDischargedIndex).getDischarged()));
-                deathsInStateTextview.setText("Deaths : "+Integer.toString(questionArrayList.get(currentDeathInStateIndex).getDeathsInState()));
-                positiveCasesTextview.setText("Positive Cases : " +Integer.toString(questionArrayList.get(currentPositiveCasesIndex).getPositiveCasesInState()));
+                dischargedTextview.setText("Discharged : "+String.valueOf(questionArrayList.get(currentDischargedIndex).getDischarged()));
+                deathsInStateTextview.setText("Deaths : "+String.valueOf(questionArrayList.get(currentDeathInStateIndex).getDeathsInState()));
+                positiveCasesTextview.setText("Positive Cases : " +String.valueOf(questionArrayList.get(currentPositiveCasesIndex).getPositiveCasesInState()));
 
                 Log.d("statename ; ", "processFinished: "+questionArrayList.get(currentStateIndex).getStateNames());
                 Log.d("positivecases ", "processFinished: "+questionArrayList.get(currentPositiveCasesIndex).getPositiveCasesInState());
             }
         });
-        //Log.d("Main", "onCreate: "+questionList);
+        Log.d("Main", "onCreate: "+questionList);
+        Log.d("Mainsize", "onCreate: "+questionList.size());
     }
-    int index=0;
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.previous_button:
-
+                if (currentStateIndex>0){
+                    currentStateIndex = (currentStateIndex - 1)%questionList.size();
+                    currentDeathInStateIndex = (currentDeathInStateIndex-1)%questionList.size();
+                    currentDischargedIndex = (currentDischargedIndex - 1)%questionList.size();
+                    currentPositiveCasesIndex = (currentPositiveCasesIndex - 1)%questionList.size();
+                    updateState();
+                }
                 break;
             case R.id.next_button:
-                index = currentStateIndex;
-                index = (index + 1)%questionList.size();
+                currentStateIndex = (currentStateIndex + 1)%questionList.size();
+                currentDeathInStateIndex = (currentDeathInStateIndex+1)%questionList.size();
+                currentDischargedIndex = (currentDischargedIndex + 1)%questionList.size();
+                currentPositiveCasesIndex = (currentPositiveCasesIndex + 1)%questionList.size();
                 updateState();
                 break;
         }
     }
 
     private void updateState() {
-        Log.d("stateupdae? ", "updateState: "+questionList.get(index));
-        String state = questionList.get(index).getStateNames();
-        int discharged = questionList.get(index).getDischarged();
-        int positivacases = questionList.get(index).getPositiveCasesInState();
-        int deathinstate = questionList.get(index).getDeathsInState();
-        stateTextview.setText(state);
-        deathsInStateTextview.setText(deathinstate);
-        dischargedTextview.setText(discharged);
-        positiveCasesTextview.setText(positivacases);
+        Log.d("stateupdae? ", "updateState: "+questionList.get(currentStateIndex));
+        String state = questionList.get(currentStateIndex).getStateNames();
+        int discharged = questionList.get(currentDischargedIndex).getDischarged();
+        int positivacases = questionList.get(currentPositiveCasesIndex).getPositiveCasesInState();
+        int deathinstate = questionList.get(currentDeathInStateIndex).getDeathsInState();
+        stateTextview.setText(String.valueOf(state));
+        deathsInStateTextview.setText("Deaths : "+String.valueOf(deathinstate));
+        dischargedTextview.setText("Discharged : "+String.valueOf(discharged));
+        positiveCasesTextview.setText("Positive Cases : " +String.valueOf(positivacases));
     }
 }
